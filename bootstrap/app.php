@@ -14,6 +14,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         //
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create();
+    ->withExceptions(function (Exceptions $exceptions) {
+        // Tangkap exception dan ubah responnya menjadi JSON seragam jika request diawali dengan api/
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => 'error',
+                    'data' => null,
+                    'message' => $e->getMessage(),
+                ], method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
+            }
+        });
+    })
+    ->create();
