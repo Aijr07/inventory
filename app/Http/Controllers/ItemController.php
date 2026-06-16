@@ -15,8 +15,14 @@ class ItemController extends BaseController {
         $this->svc = $svc;
     }
 
-    public function index() {
-        return $this->success($this->svc->all(), "Berhasil menarik semua data Item");
+    public function index(Request $request){
+        $items = $this->svc
+            ->all()
+            ->filter(fn($item) =>
+            !$request->category_id
+            || $item->category_id == $request->category_id
+            );
+        return $this->success($items);
     }
 
     public function store(StoreItemRequest $req) {

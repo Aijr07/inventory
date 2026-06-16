@@ -15,6 +15,7 @@ Base URL: http://localhost:8000/api/v1
 ## Item Barang
 * **GET /items** - Menarik semua daftar item barang.
 * **POST /items** - Menambahkan item barang baru.
-* **GET /items/{id}** - Melihat detail satu item barang.
+* **GET /items?category_id={id} - Melihat detail satu item barang.
 * **PUT /items/{id}** - Memperbarui data spesifik item.
 * **DELETE /items/{id}** - Menghapus item barang (Khusus Admin).
+
